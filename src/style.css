@@ -1,0 +1,307 @@
+/* === GLOBAL RESET & SETUP === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    font-family: 'VT323', 'Courier New', monospace;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.dashboard-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+
+.dashboard-stage {
+    position: relative;
+    width: 100vw;
+    height: 50vw;             /* 2:1 ratio: height = width/2 */
+    max-height: 100vh;
+    max-width: 200vh;         /* 2:1 ratio: width = height*2 */
+    background: #000;
+}
+
+.base-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* === CRT TERMINAL OVERLAYS === */
+.terminal-screen {
+    position: absolute;
+    background-color: #000;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1vw;
+    line-height: 1.2;
+    padding: 1%;
+    overflow-y: auto;
+    z-index: 15;
+}
+
+/* Upper CRT - Brain output */
+#upper-terminal {
+    top: 22%;
+    left: 29%;
+    width: 32.0%;
+    height: 20.8%;
+}
+
+/* Lower CRT - User input ONLY - NO .terminal-screen class */
+#lower-terminal {
+    position: absolute;
+    top: 62.50%;
+    left: 29%;
+    width: 32.0%;
+    height: 20.8%;
+    background-color: #000;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 12px;
+    box-sizing: border-box;
+    border: none !important;
+}
+
+/* TARGET: The Amber Gate/Status messages in the lower terminal */
+#lower-terminal div {
+    font-size: 1.6vw !important; /* Forces the amber text to be significantly larger */
+    line-height: 1.4;
+    font-weight: bold;
+    color: #ffaa00; /* Amber */
+    text-shadow: 0 0 8px rgba(255, 170, 0, 0.6);
+    margin-bottom: 4px;
+}
+
+/* User input field */
+#prompt-in {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    color: #00ffff !important; /* Cyan input */
+    font-family: 'Courier New', monospace !important;
+    font-size: 1.1vw !important; /* Standard size for typing */
+    width: 100% !important;
+    margin-top: auto; /* Keeps the input at the bottom of the box */
+    caret-color: #00ffff !important;
+}
+
+/* Scrollbar styling - only for UPPER terminal */
+#upper-terminal::-webkit-scrollbar {
+    width: 6px;
+}
+#upper-terminal::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.5);
+}
+#upper-terminal::-webkit-scrollbar-thumb {
+    background: #00ff41;
+    border-radius: 3px;
+}
+
+/* CRT scanline effect - only for UPPER terminal */
+#upper-terminal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1; /* Behind text in upper, doesn't affect lower */
+}
+
+/* === DIAL 1: MODEL SWITCHER === */
+#model-needle {
+    position: absolute;
+    z-index: 15;
+    top: 36.7%;
+    left: 19.7%;
+    width: 4%;
+    height: 1.5%;
+    background: transparent !important;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+#model-knob-container {
+    position: absolute;
+    z-index: 20;
+    top: 48%;
+    left: 19.7%;
+    width: 2.5%;
+    aspect-ratio: 1 / 1;
+    cursor: grab;
+    transform: translate(-50%, -50%);
+}
+
+/* === DIAL 2: TOOL TYPE === */
+#tool-needle {
+    position: absolute;
+    z-index: 15;
+    top: 68.5%;
+    left: 19.5%;
+    width: 4%;
+    height: 1.5%;
+    background: transparent !important;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+#tool-knob-container {
+    position: absolute;
+    z-index: 20;
+    top: 81%;
+    left: 19.5%;
+    width: 2.5%;
+    aspect-ratio: 1 / 1;
+    cursor: grab;
+    transform: translate(-50%, -50%);
+}
+
+.knob-container:active {
+    cursor: grabbing;
+}
+
+.knob-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* === SLIDERS === */
+.slider-row {
+    position: absolute;
+    width: 15%;      /* Matching the visual grey panel */
+    left: 72%;       /* Right side of screen */
+    height: 4%;      /* Slim height for each slider row */
+    z-index: 60;
+}
+
+input[type="range"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.slider-thumb {
+    position: absolute;
+    top: 50%;
+    width: 50px !important;
+    height: 50px !important;
+    background: url('assets/slider.png') no-repeat center center !important;
+    background-size: contain !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* This replaces .led-container - the container is now just a positioning anchor */
+#status-light-array {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 500;
+}
+
+/* This replaces .led-img - matches the class in app_28.js */
+.status-light {
+    position: absolute;
+    transform: translate(-50%, -50%); /* Centers the flare on the socket */
+    transition: opacity 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+}
+
+/* These replace .led-img.off, .led-img.on, etc. */
+.status-light.off { 
+    opacity: 0.15 !important; 
+}
+
+.status-light.dim { 
+    opacity: 0.5 !important; 
+}
+
+.status-light.on { 
+    opacity: 1.0 !important; 
+}
+
+/* === CATEGORY BUTTONS === */
+.cat-btn {
+    position: absolute;
+    width: 5%;
+    height: 8%;
+    cursor: pointer;
+    z-index: 30;
+}
+
+.cat-btn.lit {
+    background: rgba(0, 255, 65, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+/* === UTILITY === */
+.hidden {
+    display: none !important;
+}
+
+.cat-btn.active {
+    background-image: url('assets/BUTTON.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Ensure the flare is visible but doesn't block the click */
+    pointer-events: auto; 
+    transition: opacity 0.2s ease;
+}
+
+.system-header {
+    color: #ffaa00; /* Rich Amber */
+    font-family: 'Courier New', Courier, monospace, !important;
+    font-size: 1.5vw, !important; /* Makes it significantly larger */
+    font-weight: 900, !important; /* Ultra bold */
+    text-transform: uppercase;
+    letter-spacing: 1.5px; /* Spaced out for that "computer readout" look */
+    display: block;
+    margin-bottom: 15px;
+    padding: 5px;
+    background: rgba(255, 170, 0, 0.1); /* Very faint amber background tint */
+    border-left: 4px solid #ffaa00; /* A vertical "status bar" on the left */
+    text-shadow: 0 0 10px rgba(255, 170, 0, 0.8), 0 0 20px rgba(255, 170, 0, 0.4);
+}

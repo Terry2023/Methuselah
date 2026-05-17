@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Brain Dashboard</title>
+    
+    <!-- THIS IS THE MISSING LINK -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- GSAP for the needle and knob animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-stage">
+        <!-- BACKGROUND LAYER -->
+        <img src="assets/final.png" class="base-layer" alt="Dashboard Base">
+        
+        <!-- DIAL 1: MODEL SWITCHER -->
+        <img src="assets/single_needle.png" id="model-needle" class="needle" alt="Model Needle">
+        <div id="model-knob-container" class="knob-container">
+            <img src="assets/knob.png" class="knob-img" alt="Model Knob">
+        </div>
+
+        <!-- DIAL 2: TOOL TYPE -->
+        <img src="assets/single_needle.png" id="tool-needle" class="needle" alt="Tool Needle">
+        <div id="tool-knob-container" class="knob-container">
+            <img src="assets/knob.png" class="knob-img" alt="Tool Knob">
+        </div>
+
+        <!-- TERMINALS -->
+        <div id="upper-terminal" class="terminal-screen"></div>
+        <div id="lower-terminal">
+            <input type="text" id="prompt-in" autocomplete="off" spellcheck="false" autofocus>
+        </div>
+
+        <div id="status-light-array" class="status-cluster"></div>
+
+
+        <!-- SLIDER CLUSTER -->
+        <div class="sliders-container">
+            <div class="slider-row" data-label="Memory" style="position: absolute; top: 37%; left: 77.2%;">
+                <input type="range" id="memory-slider" min="0" max="100" value="0">
+                <div class="slider-thumb" id="memory-thumb"></div>
+            </div>
+            <div class="slider-row" data-label="Accuracy" style="position: absolute; top: 43%; left: 77.2%;">
+                <input type="range" id="accuracy-slider" min="0" max="100" value="0">
+                <div class="slider-thumb" id="accuracy-thumb"></div>
+            </div>
+            <div class="slider-row" data-label="Brevity" style="position: absolute; top: 49.5%; left: 77.2%;">
+                <input type="range" id="brevity-slider" min="0" max="100" value="0">
+                <div class="slider-thumb" id="brevity-thumb"></div>
+            </div>
+            <div class="slider-row" data-label="Creativity" style="position: absolute; top: 55.5%; left: 77.2%;">
+                <input type="range" id="creativity-slider" min="0" max="100" value="0">
+                <div class="slider-thumb" id="creativity-thumb"></div>
+            </div>
+            <div class="slider-row" data-label="Repetition" style="position: absolute; top: 62%; left: 77.2%;">
+                <input type="range" id="repetition-slider" min="0" max="100" value="0">
+                <div class="slider-thumb" id="repetition-thumb"></div>
+            </div>
+            <div class="slider-row" data-label="Inference" style="position: absolute; top: 68.4%; left: 77.2%;">
+                <input type="range" id="inference-slider" min="0" max="100" value="0">
+                <div class="slider-thumb" id="inference-thumb"></div>
+            </div>
+        </div> <!-- END sliders-container -->
+
+        <!-- CATEGORY BAR (The 8 Gates) -->
+        <div id="category-bar">
+            <div id="gen-know" class="cat-btn" style="top: 4.5%; left: 18.5%;"></div>
+            <div id="sci-tech" class="cat-btn" style="top: 4.5%; left: 25.4%;"></div>
+            <div id="hist"     class="cat-btn" style="top: 4.5%; left: 32.3%;"></div>
+            <div id="art-lit"  class="cat-btn" style="top: 4.5%; left: 39.2%;"></div>
+            <div id="rel-phil" class="cat-btn" style="top: 4.5%; left: 46.2%;"></div>
+            <div id="bus"      class="cat-btn" style="top: 4.5%; left: 53.2%;"></div>
+            <div id="health"   class="cat-btn" style="top: 4.5%; left: 60.1%;"></div>
+            <div id="cur-ev"   class="cat-btn" style="top: 4.5%; left: 67.1%;"></div>
+        </div>
+            
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="app.js"></script>
+</body>

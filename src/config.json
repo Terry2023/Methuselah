@@ -1,0 +1,26 @@
+{
+  "canvas"
+:
+{
+"width": 1920,
+"height": 1080
+},
+  
+  "categories": [
+    { "id": "gen-know", "label": "General Knowledge", "guardrail": "Use broad context." },
+    { "id": "sci-tech", "label": "Science & Tech", "guardrail": "Restrict to empirical, physical, and logical data. No speculation." },
+    { "id": "hist", "label": "History", "guardrail": "Use chronological accuracy and primary historical sources." },
+    { "id": "art-lit", "label": "Art & Lit", "guardrail": "Focus on aesthetics, prose, and creative theory." },
+    { "id": "rel-phil", "label": "Religion & Philosophy", "guardrail": "Restrict search to theological and philosophical texts only." },
+    { "id": "bus", "label": "Business", "guardrail": "Focus on economics and market theory." },
+    { "id": "health", "label": "Health", "guardrail": "Focus on biological and medical accuracy." },
+    { "id": "cur-ev", "label": "Current Events", "guardrail": "Access latest news and 2026 data." }
+  ],
+  
+  "status_lights": [
+    { "id": "light-thinking", "file": "amber.png", "top": "90%", "left": "72.5%", "width": "160px", "opacity": 0.2 },
+    { "id": "light-ready", "file": "green.png", "top": "90%", "left": "78.5%", "width": "160px", "opacity": 0.2 },
+    { "id": "light-searching", "file": "blue.png", "top": "90%", "left": "85.5%", "width": "160px", "opacity": 0.2 },
+    { "id": "light-commit", "file": "violet.png", "top": "90%", "left": "92.5%", "width": "160px", "opacity": 0.2 }
+  ]
+}
