@@ -1,0 +1,5 @@
+duckduckgo_search==8.1.1
+fastapi==0.136.3
+httpx==0.28.1
+Requests==2.34.2
+uvicorn==0.48.0
